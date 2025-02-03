@@ -1,6 +1,12 @@
 import pygame
 from constants import *
 
+# Set FPS limit prior to game loop
+# Create time clock object
+clock = pygame.time.Clock()
+# Delta time setup 
+dt = 0
+
 def main():
     # Initialize pygame
     pygame.init()
@@ -17,6 +23,11 @@ def main():
 
         # Refresh Screen, Call last in loop
         pygame.display.flip()
+
+        # Wait 1/60th of second
+        clock.tick(60)
+        dt = clock.tick(60) / 1000
+        print(dt)
 
     print(f"Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
