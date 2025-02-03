@@ -1,6 +1,6 @@
 import pygame
 from constants import *
-from player import Player
+from player import *
 
 # Set FPS limit prior to game loop
 # Create time clock object
@@ -20,23 +20,28 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     # Game Loop
     while True:
+        # Save Delta time value in milliseconds
+        dt = clock.tick(60) / 1000
+
         # Check if user closes window/close game if they do
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            
         # Fill screen with color black
         screen.fill((0,0,0))
 
         # Render the player
         p1.draw(screen)
-
+        # player actions
+        p1.update(dt)
+        
         # Refresh Screen, Call last in loop
         pygame.display.flip()
 
         # Wait 1/60th of second, limit to 60FPS
         clock.tick(60)
-        # Save Delta time value in milliseconds
-        dt = clock.tick(60) / 1000
+        
 
     print(f"Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
