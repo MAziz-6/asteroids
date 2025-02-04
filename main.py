@@ -7,17 +7,26 @@ from player import *
 clock = pygame.time.Clock()
 # Delta time setup 
 dt = 0
-# Instantiate a player object
-p1 = Player(
-    x= (SCREEN_WIDTH / 2),
-    y= (SCREEN_HEIGHT / 2)
-)
+
 
 def main():
     # Initialize pygame
     pygame.init()
     # Set new GUI window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
+    # Groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
+    # Instantiate a player object
+    p1 = Player(
+        x= (SCREEN_WIDTH / 2),
+        y= (SCREEN_HEIGHT / 2)
+    )
+
     # Game Loop
     while True:
         # Save Delta time value in milliseconds
@@ -32,9 +41,10 @@ def main():
         screen.fill((0,0,0))
 
         # Render the player
-        p1.draw(screen)
+        for sprite in drawable:
+            sprite.draw(screen)
         # player actions
-        p1.update(dt)
+        updatable.update(dt)
         
         # Refresh Screen, Call last in loop
         pygame.display.flip()
