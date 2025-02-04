@@ -1,6 +1,8 @@
 import pygame
 from constants import *
-from player import *
+from player import Player
+from asteroid import Asteroid
+from asteroidfield import *
 
 # Set FPS limit prior to game loop
 # Create time clock object
@@ -18,14 +20,20 @@ def main():
     # Groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+    
 
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
     # Instantiate a player object
     p1 = Player(
         x= (SCREEN_WIDTH / 2),
         y= (SCREEN_HEIGHT / 2)
     )
+
+    a_field = AsteroidField()
 
     # Game Loop
     while True:
@@ -40,9 +48,10 @@ def main():
         # Fill screen with color black
         screen.fill((0,0,0))
 
-        # Render the player
+        # Render the stuff
         for sprite in drawable:
             sprite.draw(screen)
+        
         # player actions
         updatable.update(dt)
         
